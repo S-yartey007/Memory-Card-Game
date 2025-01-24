@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Card from "./Card";
 function Scoreboard({ pokemons }) {
   const [currentScore, setCurrentScore] = useState(0);
@@ -18,7 +18,7 @@ function Scoreboard({ pokemons }) {
     }
     setTimeout(() => {
       setRandomizedPokemon(shuffledArray);
-    }, 500); // Update state with the shuffled array
+    }, 300); // Update state with the shuffled array
   };
 
   const handleCardClick = (card) => {

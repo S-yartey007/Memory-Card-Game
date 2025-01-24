@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 function Card({ pokemon, text, randomise, onClick }) {
   const [imageUrl, setImageUrl] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -14,32 +15,36 @@ function Card({ pokemon, text, randomise, onClick }) {
         setImageUrl(data.sprites.front_default);
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchPokemon();
   }, [pokemon]);
 
-  return (
-    <div
-      onClick={() => {
-        onClick();
-        randomise();
-      }}
-      style={{
-        margin: "10px",
-        border: "1px solid black",
-        display: "flex",
-        borderRadius: "10px",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "pointer",
-      }}
-    >
-      <img src={imageUrl} alt="This is an image card" />
-      <p>{text}</p>
-    </div>
-  );
+  if (isLoading) return <p>Loading ...</p>;
+  else
+    return (
+      <div
+        onClick={() => {
+          onClick();
+          randomise();
+        }}
+        style={{
+          margin: "10px",
+          border: "1px solid black",
+          display: "flex",
+          borderRadius: "10px",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+        }}
+      >
+        <img src={imageUrl} alt="This is an image card" />
+        <p>{text}</p>
+      </div>
+    );
 }
 
 export default Card;
